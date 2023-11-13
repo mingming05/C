@@ -15,18 +15,21 @@ int gcd(int a, int b) // 感谢欧几里得先生，虽然我看不懂，但我�
 int visibleNuminMatrix(int n)
 {
     int count = 0;
+    if (n == 1)
+    {
+        return count;
+    }
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < i; j++)
         {
-            if (gcd(i, j) == 1&& (i != 0 || j != 0))
+            if (gcd(i, j) == 1)
             {
                 count++;
-                printf("%d,%d ", i, j);
-                printf("%d\n", count);
             }
         }
     }
+    count = 2 * count + 1;
     return count;
 }
 
