@@ -175,17 +175,10 @@ int Bubble(int carriage[], int n)
                 carriage[i] = carriage[i + 1];
                 carriage[i + 1] = cache;
                 sum += 1;
-                a += 1;
+                check = 1;
             }
         }
-        if (a == 0)
-        {
-            check = 0;
-        }
-        else
-        {
-            check = 1;
-        }
+    
 
     } while (check);
     return sum;

@@ -1,42 +1,42 @@
 #include <stdio.h>
+#define MAXN 40000 + 10
 
-int gcd(int a, int b) // 感谢欧几里得先生，虽然我看不懂，但我大受震撼
-{
-    int c;
-    while (b != 0)
-    {
-        c = a % b;
-        a = b;
-        b = c;
-    }
-    return a;
-}
+int phi[MAXN], ans[MAXN];
 
-int visibleNuminMatrix(int n)
+void euler()
 {
-    int count = 0;
-    if (n == 1)
+    ans[1] = 1;
+    for (int i = 1; i <= MAXN; i++)
     {
-        return count;
-    }
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < i; j++)
+        int res = i, n = i;
+        for (int j = 2; j * j <= n; j++)
         {
-            if (gcd(i, j) == 1)
-            {
-                count++;
-            }
+            if (!(n % j))
+                res = res * (j - 1) / j;
+            while (!(n % j))
+                n /= j;
         }
+        if (n > 1)
+            res = res * (n - 1) / n;
+        phi[i] = res;
     }
-    count = 2 * count + 1;
-    return count;
+    for (int i = 2; i <= MAXN; i++)
+        for (int j = 1; j < i; j++)
+            ans[i] += phi[j];
 }
 
-int main()
+int main(int argc, char const *argv[])
 {
+    euler();
     int n;
-    scanf("%d", &n);
-    printf("%d", visibleNuminMatrix(n));
+    while (~scanf("%d", &n))
+    {
+        if (n == 1) // 方阵大小为1*1时特判，此时队列中只有自己，输出0
+        {
+            puts("0");
+            continue;
+        }
+        printf("%d\n", 2 * ans[n] + 1);
+    }
     return 0;
 }
