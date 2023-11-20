@@ -1,42 +1,48 @@
 #include <stdio.h>
-#define MAXN 40000 + 10
 
-int phi[MAXN], ans[MAXN];
-
-void euler()
+int eulerTotient(int i)
 {
-    ans[1] = 1;
-    for (int i = 1; i <= MAXN; i++)
+    if (i == 1)
     {
-        int res = i, n = i;
-        for (int j = 2; j * j <= n; j++)
-        {
-            if (!(n % j))
-                res = res * (j - 1) / j;
-            while (!(n % j))
-                n /= j;
-        }
-        if (n > 1)
-            res = res * (n - 1) / n;
-        phi[i] = res;
+        return 1;
     }
-    for (int i = 2; i <= MAXN; i++)
-        for (int j = 1; j < i; j++)
-            ans[i] += phi[j];
+    int result = i, n = i;
+    for (int j = 2; j * j <= n; j++)
+    {
+        if (n % j == 0)
+        {
+            result = result * (j - 1) / j;
+        }
+        while (n % j == 0)
+        {
+            n /= j;
+        }
+    }
+    if (n > 1)
+    {
+        result = result * (n - 1) / n;
+    }
+    return result;
 }
 
-int main(int argc, char const *argv[])
+int visible(int n)
 {
-    euler();
-    int n;
-    while (~scanf("%d", &n))
+    int sum = 0;
+    for (int i = 1; i < n; i++)
     {
-        if (n == 1) // 方阵大小为1*1时特判，此时队列中只有自己，输出0
-        {
-            puts("0");
-            continue;
-        }
-        printf("%d\n", 2 * ans[n] + 1);
+        sum += eulerTotient(i);
     }
+    if (n > 1)
+    {
+        sum = 2 * sum + 1;
+    }
+    return sum;
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    printf("%d", visible(n));
     return 0;
 }
