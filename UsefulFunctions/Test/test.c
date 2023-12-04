@@ -2,8 +2,9 @@
 
 int main()
 {
-    int a;
-    int *p;
-    p = &a;
+    FILE *fp;
+    fp = fopen("in.txt", "a");
+    fprintf(fp, "Hello World!\n");
+    fclose(fp);
     return 0;
 }
