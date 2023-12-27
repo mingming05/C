@@ -10,7 +10,7 @@ int ifSymmetricalinKSys(int n, int k)
         arr[i] = ncopy % k;
         ncopy /= k;
     }
-    for (int j = 0; j <= i / 2; j++)
+    for (int j = 0; j < i / 2; j++)
     {
         if (arr[j] != arr[i - j - 1])
         {

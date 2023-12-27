@@ -12,8 +12,7 @@ long long solve(int a, int b)
     {
         return a + a - b;
     }
-
-    return a / b * (b + b) + solve(a % b, b);
+    return a / b * (b + b) + solve(b, a % b);
 }
 
 int main()

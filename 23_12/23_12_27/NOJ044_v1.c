@@ -49,7 +49,7 @@ int main()
 #include <stdio.h>
 #include <stdbool.h>
 
-#define MAXSIZE 4
+#define MAXSIZE 301
 
 int arr[MAXSIZE][MAXSIZE] = {0};
 int preSum[MAXSIZE][MAXSIZE] = {0};
@@ -60,16 +60,8 @@ void prefix(int n, int m)
     {
         for (int j = 1; j <= m; ++j)
         {
-            preSum[i][j] = preSum[i - 1][j] + preSum[i][j - 1] - preSum[i - 1][j - 1] + arr[i][j];
+            preSum[i][j] = preSum[i - 1][j] + preSum[i][j - 1] - preSum[i - 1][j - 1] + arr[i][j]; // 上面的元素加上左边的元素减去左上角的元素再加上当前元素
         }
-    }
-    for (int i = 1; i <= n; ++i)
-    {
-        for (int j = 1; j <= m; ++j)
-        {
-            printf("%d ", preSum[i][j]);
-        }
-        printf("\n");
     }
 }
 
@@ -101,10 +93,13 @@ int perfectNum(int n, int m)
     {
         for (int j = 1; j <= m; ++j)
         {
-            for (int k = 1; k + i <= n && k + j <= m; ++k)
+            for (int k = 1; k + i <= n && k + j <= m; k++)
             {
                 if (arr[i][k + j] == -1 || arr[k + i][j] == -1)
+                {
                     break;
+                }
+                
                 if (isPerfect(i, i + k, j, j + k))
                 {
                     ++cnt;
@@ -119,13 +114,15 @@ int main()
 {
     int n, m;
     scanf("%d %d", &n, &m);
-    for (int i = 1; i <= n; ++i)
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = 1; j <= m; ++j)
+        for (int j = 1; j <= m; j++)
         {
             scanf("%d", &arr[i][j]);
             if (arr[i][j] == 0)
+            {
                 arr[i][j] = -1;
+            }
         }
     }
     prefix(n, m);
